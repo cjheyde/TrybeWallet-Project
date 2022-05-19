@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import './css/Header.css';
 
 class Header extends React.Component {
   constructor() {
@@ -24,18 +25,28 @@ class Header extends React.Component {
     return (
       <div>
         Header
-        <fieldset>
-          <h2 data-testid="email-field">{email}</h2>
-          <section data-testid="total-field">
-            Despesa total
+        <fieldset className="info_principal">
+
+          <h4
+            data-testid="email-field"
+          >
             {' '}
-            {despesaTotal}
-          </section>
-          <h3 data-testid="header-currency-field">
-            Câmbio para
+            {email}
+            {' '}
+          </h4>
+
+          <h4 data-testid="total-field">
+            {' '}
+            {' '}
+            Despesa total = R$
+            {' '}
+            { despesaTotal }
+          </h4>
+
+          <h4 data-testid="header-currency-field">
             {' '}
             {cambioReferencia}
-          </h3>
+          </h4>
         </fieldset>
 
       </div>

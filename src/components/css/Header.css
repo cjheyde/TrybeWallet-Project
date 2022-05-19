@@ -1,0 +1,5 @@
+.info_principal {
+  align-self: baseline;
+  display: flex;
+  justify-content: flex-end;
+}
