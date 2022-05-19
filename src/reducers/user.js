@@ -1,25 +1,30 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-import { CREATE_USER } from '../actions';
+import { SET_USER_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  user: '',
+  email: 'inicial@inicial.com',
+  password: '',
 };
 
-function userReducer(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case CREATE_USER:
-    return { ...state,
-      user: {
-        ...state.user,
-        name: action.payload.name,
-      },
+  case SET_USER_EMAIL:
+    return {
+      ...state,
+      email: action.payload,
     };
+  // case SET_USER:
+  //   return {
+  //     ...state,
+  //     user: {
+  //       ...state.user,
+  //       email: action.payload.email,
+  //       password: action.payload.password,
+  //     },
+  //   };
   default:
     return state;
   }
 }
 
-export default userReducer;
-
-// se o initial state = {} => return {...state, state_model: action.value};
-// se initial state = [] => return [...state, state_model: action.value];
+export default user;
