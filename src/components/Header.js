@@ -27,12 +27,14 @@ class Header extends React.Component {
         <fieldset>
           <h2 data-testid="email-field">{email}</h2>
           <section data-testid="total-field">
+            Despesa total
+            {' '}
             {despesaTotal}
           </section>
           <h3 data-testid="header-currency-field">
-            `Câmbio para $
+            Câmbio para
+            {' '}
             {cambioReferencia}
-            `
           </h3>
         </fieldset>
 

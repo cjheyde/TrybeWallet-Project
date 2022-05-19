@@ -21,6 +21,9 @@ class Login extends React.Component {
   // }
 
   onInputChange = ({ target }) => {
+    if (target.name === 'email') {
+      setUserEmail(target.value);
+    }
     this.setState(
       { [target.name]: target.value },
       () => this.conditionValidation(),
@@ -29,8 +32,8 @@ class Login extends React.Component {
 
   handleClick = () => {
     // const { setUser } = this.props;
-    const { email } = this.state;
-    setUserEmail(email);
+    // const { email, password } = this.state;
+    // setUserEmail(email);
     this.setState({
       isSubmitButtonDisabled: true,
       pageToGo: '/carteira',
