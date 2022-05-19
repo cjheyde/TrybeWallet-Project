@@ -7,14 +7,14 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-function wallet(state = INITIAL_STATE, action) {
+function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case FETCH_CURRENCY_SUCCESS:
     return {
       ...state,
       wallet: {
         ...state.wallet,
-        currencies: action.payload.currencies,
+        currencies: action.currencies,
       },
     };
   default:
@@ -22,4 +22,4 @@ function wallet(state = INITIAL_STATE, action) {
   }
 }
 
-export default wallet;
+export default walletReducer;

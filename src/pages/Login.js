@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import propTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { setUserEmail } from '../actions/index';
 
@@ -16,14 +16,8 @@ class Login extends React.Component {
     };
   }
 
-  // componentDidMount() {
-
-  // }
-
   onInputChange = ({ target }) => {
-    if (target.name === 'email') {
-      setUserEmail(target.value);
-    }
+    // console.log(this.props.sendUserEmailToStore);
     this.setState(
       { [target.name]: target.value },
       () => this.conditionValidation(),
@@ -31,9 +25,9 @@ class Login extends React.Component {
   }
 
   handleClick = () => {
-    // const { setUser } = this.props;
-    // const { email, password } = this.state;
-    // setUserEmail(email);
+    const { sendUserEmailToStore } = this.props;
+    const { email } = this.state;
+    sendUserEmailToStore(email);
     this.setState({
       isSubmitButtonDisabled: true,
       pageToGo: '/carteira',
@@ -97,7 +91,7 @@ class Login extends React.Component {
               type="button"
               value="Entrar"
               disabled={ isSubmitButtonDisabled }
-              onClick={ this.handleClick }
+              onClick={ () => this.handleClick() }
             />
           </label>
         </form>
@@ -107,11 +101,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setUserEmail: (email) => dispatch(setUserEmail(email)),
+  sendUserEmailToStore: (email) => dispatch(setUserEmail(email)),
 });
 
-// Login.propTypes = {
-//   setUser: propTypes.func.isRequired,
-// };
+Login.propTypes = {
+  sendUserEmailToStore: propTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);

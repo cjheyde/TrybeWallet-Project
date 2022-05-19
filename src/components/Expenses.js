@@ -30,15 +30,16 @@ class Expenses extends React.Component {
         Expenses
         <fieldset className="setagem_despesas">
 
-          <lable data-testid="value-input">
+          <label htmlFor="valorDespesa" data-testid="value-input">
             Valor
             {' '}
             <input
+              id="valorDespesa"
               type="number"
               value={ valorDespesa }
               onChange={ this.onChange }
             />
-          </lable>
+          </label>
 
           <label htmlFor="moeda">
             Moeda
@@ -64,6 +65,7 @@ class Expenses extends React.Component {
             <select
               required
               data-testid="method-input"
+              id="metodosPagamento"
             >
               {
                 metodosPagamento.map((metodo, index) => (
@@ -80,7 +82,7 @@ class Expenses extends React.Component {
             <select
               data-testid="tag-input"
               name="categoriasDespesa"
-              // id={id}
+              id="categoriasDespesa"
               required
               // onChange={ onChange }
               // value={ value }
@@ -94,15 +96,20 @@ class Expenses extends React.Component {
             </select>
           </label>
 
-          <lable data-testid="description-input">
+          <label
+            htmlFor="descricaoDespesa"
+            data-testid="description-input"
+          >
             Descrição
             {' '}
             <input
+              id="descricaoDespesa"
+              name="descricaoDespesa"
               type="text"
               value={ descricaoDespesa }
               onChange={ this.onChange }
             />
-          </lable>
+          </label>
 
         </fieldset>
       </div>
