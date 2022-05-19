@@ -23,7 +23,7 @@ class Expenses extends React.Component {
 
   render() {
     const { valorDespesa, descricaoDespesa,
-      metodosPagamento, categoriasDespesa } = this.state;
+      metodosPagamento, categoriasDespesa, value } = this.state;
     const { currencies } = this.props;
     return (
       <div>
@@ -45,6 +45,9 @@ class Expenses extends React.Component {
             {' '}
             <select
               required
+              id="moeda"
+              name="moeda"
+              value={ value }
             >
               {
                 currencies.map((currency, index) => (
