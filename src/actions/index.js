@@ -56,3 +56,25 @@ export const fetchCurrenciesThunk = () => (dispatch) => getCurrencies()
   .catch((error) => {
     dispatch(fetchCurrenciesError(error));
   });
+
+export const ADD_EXPENSES = 'ADD_EXPENSES';
+
+export function addExpenses(valorDespesa, descricao, categoria) {
+  return {
+    type: ADD_EXPENSES,
+    valor,
+    descricao,
+    categoria,
+  };
+}
+
+export const ADD_SETTINGS = 'ADD_EXPENSES';
+
+export function addSettings(valor, descricao, categoria) {
+  return {
+    type: ADD_SETTINGS,
+    valor,
+    descricao,
+    categoria,
+  };
+}

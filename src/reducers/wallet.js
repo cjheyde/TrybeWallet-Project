@@ -1,14 +1,22 @@
 import {
   FETCH_CURRENCY_SUCCESS,
   // FETCH_CURRENCY_ERROR,
+  ADD_EXPENSES,
 } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [],
-  error: '',
-};
+  expenses: [
+    valorDespesa,
+    descricao,
+    categoria,
 
+  ],
+  error: '',
+  idCount: 0,
+  id: '',
+};
+// se initial state = [] => return [...state, state_model: action.value];
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case FETCH_CURRENCY_SUCCESS:
@@ -24,6 +32,19 @@ function walletReducer(state = INITIAL_STATE, action) {
   //       error: action.error,
   //     },
   //   };
+  case ADD_EXPENSES:
+    const idExpense = state.idCount + 1;
+    const newExpenseValue = [...action.expenses.String(valorDespesa), id: idExpense]; 
+    const newExpenseDescription = [...action.expenses.descricao]; 
+    const newExpenseCategory = [...action.expenses.categoria]; 
+    return [
+      ...state,
+      idCount: idExpense,
+      expenses: {
+        ...state.expenses, newExpenseValue, newExpenseDescription, newExpenseCategory },
+    ];
+  case ADD_SETTINGS
+    // completar
   default:
     return state;
   }
