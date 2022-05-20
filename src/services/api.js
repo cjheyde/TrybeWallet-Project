@@ -3,7 +3,10 @@ const getCurrencies = async () => {
 
   const response = await fetch(url);
   const currencies = await response.json();
+  // console.log(currencies);
   return (currencies);
 };
+
+// getCurrencies();
 
 export default getCurrencies;

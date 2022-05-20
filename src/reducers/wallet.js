@@ -1,10 +1,12 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// import { SET_WALLET } from '../actions/index';
-import { FETCH_CURRENCY_SUCCESS } from '../actions/index';
+import {
+  FETCH_CURRENCY_SUCCESS,
+  // FETCH_CURRENCY_ERROR,
+} from '../actions/index';
 
 const INITIAL_STATE = {
-  currencies: ['USD', 'EUR'],
+  currencies: [],
   expenses: [],
+  error: '',
 };
 
 function walletReducer(state = INITIAL_STATE, action) {
@@ -12,11 +14,16 @@ function walletReducer(state = INITIAL_STATE, action) {
   case FETCH_CURRENCY_SUCCESS:
     return {
       ...state,
-      wallet: {
-        ...state.wallet,
-        currencies: action.currencies,
-      },
+      currencies: action.currencies.filter((currency) => currency !== 'USDT'),
     };
+  // case FETCH_CURRENCY_ERROR:
+  //   return {
+  //     ...state,
+  //     wallet: {
+  //       ...state.wallet,
+  //       error: action.error,
+  //     },
+  //   };
   default:
     return state;
   }

@@ -84,8 +84,8 @@ class Expenses extends React.Component {
               name="categoriasDespesa"
               id="categoriasDespesa"
               required
-              // onChange={ onChange }
-              // value={ value }
+            // onChange={ onChange }
+            // value={ value }
             >
               {/* <option value={ defaultValue }>{ defaultOption }</option> */}
               {

@@ -26,7 +26,7 @@ export const setUserPassword = (password) => ({
 
 export const createUsersList = (user) => ({
   type: CREATE_USERS_LIST,
-  payload: user,
+  user,
 });
 
 export const FETCH_CURRENCY_SUCCESS = 'FETCH_CURRENCY_SUCCESS';
@@ -35,22 +35,22 @@ export const FETCH_CURRENCY_ERROR = 'FETCH_CURRENCY_ERROR';
 export function fetchCurrenciesSuccess(currencies) {
   return {
     type: FETCH_CURRENCY_SUCCESS,
-    payload: currencies,
+    currencies,
   };
 }
 
 export function fetchCurrenciesError(error) {
   return {
     type: FETCH_CURRENCY_ERROR,
-    payload: error,
+    error,
   };
 }
 
 export const fetchCurrenciesThunk = () => (dispatch) => getCurrencies()
   .then((response) => {
-    const currencies = {
-      currency_code: response.currency.code, currency_ask: Number(response.currency.ask),
-    };
+    const currencies = Object.keys(response);
+    // currency_code: response.currency.code, currency_ask: Number(response.currency.ask),
+    // currency_code: response.currency.code, currency_ask: Number(response.currency.ask),
     dispatch(fetchCurrenciesSuccess(currencies));
   })
   .catch((error) => {

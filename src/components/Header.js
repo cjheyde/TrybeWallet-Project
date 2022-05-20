@@ -48,7 +48,6 @@ class Header extends React.Component {
             {cambioReferencia}
           </h4>
         </fieldset>
-
       </div>
     );
   }
@@ -59,7 +58,7 @@ const mapStateToProps = (store) => ({
 });
 
 Header.propTypes = {
-  email: propTypes.string.isRequired,
-};
+  email: propTypes.string,
+}.isRequired;
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, null)(Header);
