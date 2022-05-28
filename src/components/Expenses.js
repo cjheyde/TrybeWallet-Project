@@ -4,58 +4,62 @@ import { connect } from 'react-redux';
 import './css/Expenses.css';
 import { addAllExpenses } from '../actions/index';
 
+const CartCredito = 'Cartão de crédito';
+
 class Expenses extends React.Component {
   constructor() {
     super();
-
     this.state = {
+      gasto: {},
       id: 0,
-      valorDespesa: 0,
-      descricao: '',
-      metodoPagamento: 'Cartão de crédito',
+      value: 0,
+      description: '',
+      method: CartCredito,
       // metodosPag: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       categoriasDespesa: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
-      categoria: 'Trabalho',
-      moeda: 'EUR',
-      gasto: {},
+      tag: 'Lazer',
+      currency: 'USD',
     };
   }
 
   onChange = ({ target }) => {
-    const { name, value } = target;
+    const { name } = target;
     this.setState(
-      { [name]: value },
-      () => this.objectStructure(),
+      { [name]: target.value },
+      () => {
+        const { id, value, description, currency, method, tag } = this.state;
+        this.setState({
+          gasto: {
+            id,
+            value,
+            description,
+            currency,
+            method,
+            tag,
+          },
+        });
+      },
     );
   }
 
-  onClick = () => {
-    const { id, gasto } = this.state;
+  onClick = (e) => {
+    e.preventDefault();
+    const { gasto } = this.state;
     const { addAllExpensesToStore } = this.props;
     addAllExpensesToStore(gasto);
-    this.setState({
-      id: id + 1,
-    });
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: CartCredito,
+      tag: 'Lazer',
+    }));
   };
 
-  objectStructure() {
-    const { id, valorDespesa, descricao, moeda, metodoPagamento,
-      categoria } = this.state;
-    this.setState({
-      gasto: {
-        id,
-        valorDespesa,
-        descricao,
-        moeda,
-        metodoPagamento,
-        categoria,
-      },
-    });
-  }
-
   render() {
-    const { valorDespesa, descricao, metodoPagamento, categoria,
-      categoriasDespesa, moeda } = this.state;
+    const { value, description, method, tag,
+      categoriasDespesa, currency } = this.state;
     const { currencies } = this.props;
     return (
       <div>
@@ -66,7 +70,7 @@ class Expenses extends React.Component {
             <input
               type="number"
               name="valorDespesa"
-              value={ valorDespesa }
+              value={ value }
               onChange={ this.onChange }
               id="valorDespesa"
               data-testid="value-input"
@@ -80,11 +84,11 @@ class Expenses extends React.Component {
               id="moeda"
               required
               onChange={ this.onChange }
-              value={ moeda }
+              value={ currency }
             >
               {
                 currencies.map((option, index) => (
-                  <option key={ index }>{ option }</option>
+                  <option key={ index }>{option}</option>
                 ))
               }
             </select>
@@ -98,11 +102,12 @@ class Expenses extends React.Component {
               required
               data-testid="method-input"
               onChange={ this.onChange }
-              value={ metodoPagamento }
+              value={ method }
             >
+              {/* // value tem que ser igual ao titulo para clicar */}
               <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de Crédito">Cartão de crédito</option>
-              <option value="Cartão de Débito">Cartão de débito</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
 
@@ -114,11 +119,11 @@ class Expenses extends React.Component {
               required
               data-testid="tag-input"
               onChange={ this.onChange }
-              value={ categoria }
+              value={ tag }
             >
               {
                 categoriasDespesa.map((option, index) => (
-                  <option key={ index }>{ option }</option>
+                  <option key={ index }>{option}</option>
                 ))
               }
             </select>
@@ -128,20 +133,19 @@ class Expenses extends React.Component {
             Descrição:
             <textarea
               name="descricao"
-              value={ descricao }
+              value={ description }
               onChange={ this.onChange }
               maxLength="1000"
               data-testid="description-input"
             />
           </label>
 
-          <label htmlFor="addButton">
-            <input
-              type="button"
-              value="Adicionar Despesa"
-              onClick={ this.onClick }
-            />
-          </label>
+          <button
+            type="submit"
+            onClick={ this.onClick }
+          >
+            Adicionar despesa
+          </button>
         </fieldset>
       </div>
     );
@@ -153,8 +157,8 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addAllExpensesToStore: (moeda) => dispatch(
-    addAllExpenses(moeda),
+  addAllExpensesToStore: (gasto) => dispatch(
+    addAllExpenses(gasto),
   ),
 });
 

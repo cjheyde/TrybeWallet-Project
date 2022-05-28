@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { fetchCurrenciesThunk } from '../actions/index';
 import './css/Header.css';
 
 class Header extends React.Component {
@@ -12,14 +13,19 @@ class Header extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { fetchCurrenciesThunkToStore } = this.props;
+    fetchCurrenciesThunkToStore();
+  }
+
   render() {
     const { email, expenses } = this.props;
     const { cambioReferencia } = this.state;
-    const despesaTotal = expenses.reduce((acc, gasto) => {
+    const despesaTotal = (expenses.reduce((acc, gasto) => {
       const moedaEscolhida = Object.entries(gasto.exchangeRates)
         .find((moeda) => moeda[0] === gasto.moeda);
-      return acc + (gasto.valorDespesa * moedaEscolhida[1].ask);
-    }, 0);
+      return acc + (gasto.value * moedaEscolhida[1].ask);
+    }, 0));
     return (
       <div>
         Header
@@ -56,9 +62,14 @@ const mapStateToProps = (store) => ({
   expenses: store.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrenciesThunkToStore: () => dispatch(fetchCurrenciesThunk()),
+});
+
 Header.propTypes = {
   email: propTypes.string,
+  fetchCurrenciesThunkToStore: propTypes.func,
   expenses: propTypes.arrayOf(propTypes.shape),
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
