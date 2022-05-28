@@ -12,7 +12,7 @@ class Expenses extends React.Component {
     this.state = {
       gasto: {},
       id: 0,
-      value: 0,
+      value: '',
       description: '',
       method: CartCredito,
       // metodosPag: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
@@ -49,11 +49,11 @@ class Expenses extends React.Component {
     addAllExpensesToStore(gasto);
     this.setState((prevState) => ({
       id: prevState.id + 1,
-      value: 0,
+      value: '',
       description: '',
       currency: 'USD',
       method: CartCredito,
-      tag: 'Lazer',
+      tag: '',
     }));
   };
 
@@ -65,30 +65,30 @@ class Expenses extends React.Component {
       <div>
         Expenses
         <fieldset className="setagem_despesas">
-          <label htmlFor="valorDespesa">
+          <label htmlFor="value">
             Valor:
             <input
               type="number"
-              name="valorDespesa"
+              name="value"
               value={ value }
               onChange={ this.onChange }
-              id="valorDespesa"
+              id="value"
               data-testid="value-input"
             />
           </label>
 
-          <label htmlFor="moeda">
+          <label htmlFor="currency">
             Moeda:
             <select
-              name="moeda"
-              id="moeda"
+              name="currency"
+              id="currency"
               required
               onChange={ this.onChange }
               value={ currency }
             >
               {
                 currencies.map((option, index) => (
-                  <option key={ index }>{option}</option>
+                  <option key={ index }>{ option }</option>
                 ))
               }
             </select>
@@ -112,7 +112,7 @@ class Expenses extends React.Component {
           </label>
 
           <label htmlFor="categoria">
-            Categoria:
+            Tag:
             <select
               name="categoria"
               id="categoria"
@@ -123,16 +123,16 @@ class Expenses extends React.Component {
             >
               {
                 categoriasDespesa.map((option, index) => (
-                  <option key={ index }>{option}</option>
+                  <option key={ index }>{ option }</option>
                 ))
               }
             </select>
           </label>
 
-          <label htmlFor="descricao">
+          <label htmlFor="description">
             Descrição:
             <textarea
-              name="descricao"
+              name="description"
               value={ description }
               onChange={ this.onChange }
               maxLength="1000"
@@ -157,9 +157,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addAllExpensesToStore: (gasto) => dispatch(
-    addAllExpenses(gasto),
-  ),
+  addAllExpensesToStore: (gasto) => dispatch(addAllExpenses(gasto)),
 });
 
 Expenses.propTypes = {

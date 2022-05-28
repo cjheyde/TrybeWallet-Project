@@ -1,11 +1,17 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Expenses from '../components/Expenses';
+import { fetchCurrenciesThunk } from '../actions/index';
 import Header from '../components/Header';
+import Expenses from '../components/Expenses';
 import '../components/css/Wallet.css';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchCurrenciesThunkToStore } = this.props;
+    fetchCurrenciesThunkToStore();
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -28,11 +34,11 @@ class Wallet extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {expenses.map((gasto) => {
-              const moedaEscolhida = Object.values(gasto.exchangeRates)
-                .find((moeda) => moeda.code === gasto.currency);
-              const nomedaMoeda = moedaEscolhida.name.split('/')[0];
-              const valordaMoeada = moedaEscolhida.ask;
+            { expenses.map((gasto) => {
+              const moedaAtual = Object.entries(gasto.exchangeRates)
+                .find((currency) => (currency[0] === gasto.currency));
+              const nomedaMoeda = moedaAtual[1].name.split('/')[0];
+              const valordaMoeada = moedaAtual[1].ask;
               const valorConvertido = gasto.value * valordaMoeada;
               return (
                 <tr key={ gasto.id } className="despesas">
@@ -72,8 +78,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrenciesThunkToStore: () => dispatch(fetchCurrenciesThunk()),
+});
+
 Wallet.propTypes = {
   expenses: propTypes.arrayOf(propTypes.shape).isRequired,
+  fetchCurrenciesThunkToStore: propTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
