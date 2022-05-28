@@ -4,6 +4,16 @@
   padding: 5;
 }
 
-th {
-  min-width: 80px;
+.cabecalio th {
+  min-width: 90px;
+}
+
+.despesas {
+  align-items: flex;
+  display: flex;
+  padding: 5;
+}
+
+.despesas th {
+  min-width: 100px;
 }

@@ -24,12 +24,12 @@ class Table extends Component {
             <th>Valor</th>
             <th>Moeda</th>
             <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
             <th>Moeda de conversão</th>
+            <th>Valor convertido</th>
             <th>Edita/Excluir</th>
           </tr>
         </fieldset>
-        <tbody>
+        <fieldset>
           {expenses.map((gasto) => {
             const um = 1;
             const moedaEscolhida = Object.entries(gasto.exchangeRates)
@@ -38,15 +38,15 @@ class Table extends Component {
             const valorDoCambio = moedaEscolhida[um].ask;
             const valorConvertido = gasto.valorDespesa * valorDoCambio;
             return (
-              <tr key={ gasto.id }>
+              <tr key={ gasto.id } className="despesas">
                 <td>{gasto.descricao}</td>
                 <td>{gasto.categoria}</td>
                 <td>{gasto.metodoPagamento}</td>
                 <td>{Number(gasto.valorDespesa).toFixed(2)}</td>
                 <td>{nomeDaMoeda}</td>
                 <td>{Number(valorDoCambio).toFixed(2)}</td>
-                <td>{Number(valorConvertido).toFixed(2)}</td>
                 <td>Real</td>
+                <td>{Number(valorConvertido).toFixed(2)}</td>
                 <td>
                   <label htmlFor="editBtn">
                     <input
@@ -66,7 +66,7 @@ class Table extends Component {
               </tr>
             );
           })}
-        </tbody>
+        </fieldset>
       </table>
     );
   }

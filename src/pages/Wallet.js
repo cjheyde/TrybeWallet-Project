@@ -13,6 +13,8 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { expenses } = this.props;
+    console.log(expenses);
     return (
       <div>
         Wallet
@@ -28,8 +30,13 @@ const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesThunkToStore: () => dispatch(fetchCurrenciesThunk()),
 });
 
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
 Wallet.propTypes = {
   fetchCurrenciesThunkToStore: propTypes.func.isRequired,
+  expenses: propTypes.arrayOf(propTypes.shape).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
