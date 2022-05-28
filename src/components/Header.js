@@ -34,10 +34,10 @@ class Header extends React.Component {
           </h4>
 
           <h4 data-testid="total-field">
-            {' '}
+            {/* {' '}
             {' '}
             Despesa total = R$
-            {' '}
+            {' '} */}
             { despesaTotal.toFixed(2) }
           </h4>
 

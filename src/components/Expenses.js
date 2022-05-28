@@ -94,11 +94,11 @@ class Expenses extends React.Component {
             </select>
           </label>
 
-          <label htmlFor="metodosPagamento">
+          <label htmlFor="method">
             Método de pagamento:
             <select
-              name="metodosPagamento"
-              id="metodosPagamento"
+              name="method"
+              id="method"
               required
               data-testid="method-input"
               onChange={ this.onChange }
@@ -111,11 +111,11 @@ class Expenses extends React.Component {
             </select>
           </label>
 
-          <label htmlFor="categoria">
+          <label htmlFor="tag">
             Tag:
             <select
-              name="categoria"
-              id="categoria"
+              name="tag"
+              id="tag"
               required
               data-testid="tag-input"
               onChange={ this.onChange }
