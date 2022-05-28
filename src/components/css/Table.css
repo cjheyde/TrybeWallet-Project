@@ -1,0 +1,9 @@
+.cabecalio {
+  align-items: flex;
+  display: flex;
+  padding: 5;
+}
+
+th {
+  min-width: 80px;
+}

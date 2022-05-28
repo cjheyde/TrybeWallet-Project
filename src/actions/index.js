@@ -59,21 +59,22 @@ export const fetchCurrenciesThunk = () => (dispatch) => getCurrencies()
 
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 
-export function addExpenses(valorDespesa, descricao, categoria) {
-  return {
-    type: ADD_EXPENSES,
-    valor,
-    descricao,
-    categoria,
-  };
-}
+export const addExpenses = (gasto, currencies) => ({
+  type: ADD_EXPENSES,
+  gasto,
+  currencies,
+});
 
-export const ADD_ALL_EXPENSES = 'ADD_ALL_EXPENSES';
+export function addAllExpenses(gasto) {
+  return async (dispatch) => {
+    try {
+      const url = 'https://economia.awesomeapi.com.br/json/all';
 
-export function addAllExpesnes(expenses, currencies) {
-  return {
-    type: ADD_ALL_EXPENSES,
-    expenses,
-    currencies,
+      const response = await fetch(url);
+      const calculus = await response.json();
+      dispatch(addExpenses(gasto, calculus));
+    } catch (error) {
+      console.log(error);
+    }
   };
 }

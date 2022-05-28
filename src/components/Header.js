@@ -8,20 +8,18 @@ class Header extends React.Component {
     super();
 
     this.state = {
-      despesaTotal: 0,
       cambioReferencia: 'BRL',
     };
   }
 
-  calculateTotalExpenses = () => {
-    this.setState({
-      despesaTotal: 10,
-    });
-  }
-
   render() {
-    const { email } = this.props;
-    const { despesaTotal, cambioReferencia } = this.state;
+    const { email, expenses } = this.props;
+    const { cambioReferencia } = this.state;
+    const despesaTotal = expenses.reduce((acc, gasto) => {
+      const moedaEscolhida = Object.entries(gasto.exchangeRates)
+        .find((moeda) => moeda[0] === gasto.moeda);
+      return acc + (gasto.valorDespesa * moedaEscolhida[1].ask);
+    }, 0);
     return (
       <div>
         Header
@@ -60,6 +58,7 @@ const mapStateToProps = (store) => ({
 
 Header.propTypes = {
   email: propTypes.string,
+  expenses: propTypes.arrayOf(propTypes.shape),
 }.isRequired;
 
 export default connect(mapStateToProps, null)(Header);

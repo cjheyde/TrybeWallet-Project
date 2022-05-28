@@ -6,14 +6,10 @@ import {
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [
-    valorDespesa,
-    descricao,
-    categoria,
-  ],
-  error: '',
-  idCount: 0,
-  id: '',
+  expenses: [],
+  // error: '',
+  // idCount: 0,
+  // id: '',
 };
 // se initial state = [] => return [...state, state_model: action.value];
 function walletReducer(state = INITIAL_STATE, action) {
@@ -32,15 +28,11 @@ function walletReducer(state = INITIAL_STATE, action) {
   //     },
   //   };
   case ADD_EXPENSES:
-    // const idExpense = state.idCount + 1;
-    // const newExpenseValue = [...action.expenses.String(valorDespesa), id: idExpense];
-    // const newExpenseDescription = [...action.expenses.descricao];
-    // const newExpenseCategory = [...action.expenses.categoria];
     return {
       ...state,
       // idCount: idExpense,
       expenses: [...state.expenses, {
-        ...action.expenses,
+        ...action.gasto,
         exchangeRates: action.currencies,
       }],
     };

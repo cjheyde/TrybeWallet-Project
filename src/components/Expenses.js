@@ -1,118 +1,147 @@
 import React from 'react';
-// import propTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './css/Expenses.css';
-import { Button } from 'bootstrap';
-import Select from './Select';
-import TextArea from './TextArea';
-import { addExpenses, addSettings } from '../actions/index';
+import { addAllExpenses } from '../actions/index';
 
 class Expenses extends React.Component {
   constructor() {
     super();
 
     this.state = {
+      id: 0,
       valorDespesa: 0,
       descricao: '',
-      metodoPagamento: '',
-      metodosPagamento: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
+      metodoPagamento: 'Cartão de crédito',
+      // metodosPag: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       categoriasDespesa: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
-      categoria: '',
-      moeda: '',
-      // isSubmitButtonDisabled: false,
+      categoria: 'Trabalho',
+      moeda: 'EUR',
+      gasto: {},
     };
   }
 
-  onChange({ target }) {
+  onChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    this.setState(
+      { [name]: value },
+      () => this.objectStructure(),
+    );
+  }
+
+  onClick = () => {
+    const { id, gasto } = this.state;
+    const { addAllExpensesToStore } = this.props;
+    addAllExpensesToStore(gasto);
+    this.setState({
+      id: id + 1,
+    });
+  };
+
+  objectStructure() {
+    const { id, valorDespesa, descricao, moeda, metodoPagamento,
+      categoria } = this.state;
+    this.setState({
+      gasto: {
+        id,
+        valorDespesa,
+        descricao,
+        moeda,
+        metodoPagamento,
+        categoria,
+      },
+    });
   }
 
   render() {
     const { valorDespesa, descricao, metodoPagamento, categoria,
-      metodosPagamento, categoriasDespesa, moeda } = this.state;
+      categoriasDespesa, moeda } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         Expenses
         <fieldset className="setagem_despesas">
-
-          <label htmlFor="valorDespesa" data-testid="value-input">
-            Valor
-            {' '}
+          <label htmlFor="valorDespesa">
+            Valor:
             <input
-              id="valorDespesa"
               type="number"
+              name="valorDespesa"
               value={ valorDespesa }
               onChange={ this.onChange }
+              id="valorDespesa"
+              data-testid="value-input"
             />
           </label>
 
           <label htmlFor="moeda">
-            Moeda
-            {' '}
+            Moeda:
             <select
-              required
-              id="moeda"
               name="moeda"
+              id="moeda"
+              required
+              onChange={ this.onChange }
               value={ moeda }
             >
               {
-                currencies.map((currency, index) => (
-                  <option key={ index } value={ currency }>{currency}</option>
+                currencies.map((option, index) => (
+                  <option key={ index }>{ option }</option>
                 ))
               }
             </select>
           </label>
 
-          <br />
           <label htmlFor="metodosPagamento">
-            Método de pagamento
-            {' '}
+            Método de pagamento:
             <select
+              name="metodosPagamento"
+              id="metodosPagamento"
               required
               data-testid="method-input"
-              id="metodosPagamento"
-              name="metodosPagamento"
               onChange={ this.onChange }
               value={ metodoPagamento }
             >
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de Crédito">Cartão de crédito</option>
+              <option value="Cartão de Débito">Cartão de débito</option>
+            </select>
+          </label>
+
+          <label htmlFor="categoria">
+            Categoria:
+            <select
+              name="categoria"
+              id="categoria"
+              required
+              data-testid="tag-input"
+              onChange={ this.onChange }
+              value={ categoria }
+            >
               {
-                metodosPagamento.map((metodo, index) => (
-                  <option key={ index } value={ metodo }>{metodo}</option>
+                categoriasDespesa.map((option, index) => (
+                  <option key={ index }>{ option }</option>
                 ))
               }
             </select>
           </label>
 
-          <br />
-          <Select
-            defaultOption="Selecione"
-            onChange={ this.handleChange }
-            value={ categoria }
-            label="Categoria: "
-            id="categotia"
-            name="categoria"
-            options={ categoriasDespesa }
-          />
+          <label htmlFor="descricao">
+            Descrição:
+            <textarea
+              name="descricao"
+              value={ descricao }
+              onChange={ this.onChange }
+              maxLength="1000"
+              data-testid="description-input"
+            />
+          </label>
 
-          <TextArea
-            label="Descrição: "
-            value={ descricao }
-            name="descriçao"
-            maxLength="1000"
-            onChange={ this.handleChange }
-            required
-            data-testid="description-input"
-          />
-
-          <Button
-            label="enviar"
-            onClick={ () => {
-              // this.setState({ isSubmitButtonDisabled: true });
-              this.addExpensesToStore(valorDespesa, descricao, categoria);
-              this.addSettingsToStore(moeda, metodoPagamento);
-            } }
-          />
+          <label htmlFor="addButton">
+            <input
+              type="button"
+              value="Adicionar Despesa"
+              onClick={ this.onClick }
+            />
+          </label>
         </fieldset>
       </div>
     );
@@ -124,18 +153,14 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addExpensesToStore: (valorDespesa, descricao, categoria) => dispatch(
-    addExpenses(valorDespesa, descricao, categoria),
-  ),
-  addSettingsToStore: (moeda, metodoPagamento) => dispatch(
-    addSettings(moeda, metodoPagamento),
+  addAllExpensesToStore: (moeda) => dispatch(
+    addAllExpenses(moeda),
   ),
 });
 
-// Expenses.propTypes = {
-//   currencies: propTypes.arrayOf(propTypes.string).isRequired,
-//   addExpensesToStore: propTypes.func.isRequired,
-//   addSettingsToStore: propTypes.func.isRequired,
-// };
+Expenses.propTypes = {
+  currencies: propTypes.arrayOf(propTypes.string).isRequired,
+  addAllExpensesToStore: propTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
