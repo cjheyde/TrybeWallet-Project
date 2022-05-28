@@ -47,6 +47,7 @@ class Wallet extends React.Component {
                   <td>{gasto.method}</td>
                   <td>{Number(gasto.value).toFixed(2)}</td>
                   <td>{nomedaMoeda}</td>
+                  <td>{Number(valordaMoeada).toFixed(2)}</td>
                   <td>{valorConvertido.toFixed(2)}</td>
                   <td>Real</td>
                   <td>Editar/Excluir</td>
