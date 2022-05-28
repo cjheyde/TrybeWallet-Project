@@ -40,7 +40,7 @@ class Header extends React.Component {
             {' '}
             Despesa total = R$
             {' '}
-            { despesaTotal }
+            { despesaTotal.toFixed(2) }
           </h4>
 
           <h4 data-testid="header-currency-field">
@@ -55,6 +55,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (store) => ({
   email: store.user.email,
+  expenses: store.wallet.expenses,
 });
 
 Header.propTypes = {

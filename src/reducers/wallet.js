@@ -10,7 +10,6 @@ const INITIAL_STATE = {
     valorDespesa,
     descricao,
     categoria,
-
   ],
   error: '',
   idCount: 0,
@@ -33,18 +32,18 @@ function walletReducer(state = INITIAL_STATE, action) {
   //     },
   //   };
   case ADD_EXPENSES:
-    const idExpense = state.idCount + 1;
-    const newExpenseValue = [...action.expenses.String(valorDespesa), id: idExpense]; 
-    const newExpenseDescription = [...action.expenses.descricao]; 
-    const newExpenseCategory = [...action.expenses.categoria]; 
-    return [
+    // const idExpense = state.idCount + 1;
+    // const newExpenseValue = [...action.expenses.String(valorDespesa), id: idExpense];
+    // const newExpenseDescription = [...action.expenses.descricao];
+    // const newExpenseCategory = [...action.expenses.categoria];
+    return {
       ...state,
-      idCount: idExpense,
-      expenses: {
-        ...state.expenses, newExpenseValue, newExpenseDescription, newExpenseCategory },
-    ];
-  case ADD_SETTINGS
-    // completar
+      // idCount: idExpense,
+      expenses: [...state.expenses, {
+        ...action.expenses,
+        exchangeRates: action.currencies,
+      }],
+    };
   default:
     return state;
   }

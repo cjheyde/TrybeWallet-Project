@@ -68,13 +68,12 @@ export function addExpenses(valorDespesa, descricao, categoria) {
   };
 }
 
-export const ADD_SETTINGS = 'ADD_EXPENSES';
+export const ADD_ALL_EXPENSES = 'ADD_ALL_EXPENSES';
 
-export function addSettings(valor, descricao, categoria) {
+export function addAllExpesnes(expenses, currencies) {
   return {
-    type: ADD_SETTINGS,
-    valor,
-    descricao,
-    categoria,
+    type: ADD_ALL_EXPENSES,
+    expenses,
+    currencies,
   };
 }
